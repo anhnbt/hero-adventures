@@ -7,66 +7,80 @@ export default class Hero {
 
     this.width = 100;
     this.height = 55;
+    this.sidewalk = 195 - this.height/2;
 
-    this.speed = 10;
+    this.speedY = 0;
+    this.speedX = 15;
+    this.jumpY = 100;
+    this.gravity = 0.1;
+    this.gravitySpeed = 0;
+    this.x = this.gameWidth / 2 - this.width / 2;
+    this.y = this.sidewalk;
     
     this.image = new Image(); // Create new img element
-    
-    this.position = {
-      x: this.gameWidth / 2 - this.width / 2,
-      y: 415 - this.height/2
-    }
+    this.image.src = './assets/images/Idle/HeroKnight_Idle_0.png'; // Set source path
+  }
+
+  jump() {
+    this.image.src = './assets/images/Run/HeroKnight_Run_6.png';
+    this.accelerate(-0.5);
+    console.log("Jump");
   }
 
   moveLeft() {
-    this.position.x -= this.speed;
+    this.image.src = './assets/images/Run/HeroKnight_Run_3.png';
+    this.x -= this.speedX;
   }
 
   moveRight() {
-    this.position.x += this.speed;
+    this.image.src = './assets/images/Run/HeroKnight_Run_3.png';
+    this.x += this.speedX;
   }
 
-  moveUp() {
-    this.position.y -= this.speed;
+  stopMove() {
+    this.image.src = './assets/images/Idle/HeroKnight_Idle_0.png';
+    this.accelerate(0.1);
+    // this.speedX = 0;
+    // this.speedY = 0;
   }
 
-  moveDown() {
-    this.position.y += this.speed;
+  hitSideWalk() {
+    if (this.y > this.sidewalk) {
+      this.y = this.sidewalk;
+      this.gravitySpeed = 0;
+    }
+    
+    if (this.y < 0) {
+      this.y = 0;
+      this.gravitySpeed = 0;
+    }
   }
 
-  // stop() {
-  //   this.position.x = this.position.x;
-  //   this.position.y = this.position.y;
-  // }
+  accelerate(n) {
+    this.gravity = n;
+  }
   
   draw(ctx) {
     if (ctx) {
-      this.image.src = './assets/images/Idle/HeroKnight_Idle_0.png'; // Set source path
-      ctx.drawImage(this.image, this.position.x, this.position.y);
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
 
   update(progress) {
     if (!progress) return;
 
-    // this.position.x += this.speed;
-    // this.position.y += this.speed;
+    this.gravitySpeed += this.gravity;
+    this.y += this.speedY + this.gravitySpeed;
+    this.hitSideWalk();
 
-    if (this.position.x < 0) {
-      this.position.x = 0;
+    if (this.x < 0) {
+      this.x = 0;
     }
 
-    if (this.position.x + this.width > this.gameWidth) {
-      this.position.x = this.gameWidth - this.width;
+    if (this.x + this.width > this.gameWidth) {
+      this.x = this.gameWidth - this.width;
     }
 
-    if (this.position.y < 0) {
-      this.position.y = 0;
-    }
-
-    if (this.position.y + this.height > this.gameHeight) {
-      this.position.y = this.gameHeight - this.height;
-    }
 
   }
 }

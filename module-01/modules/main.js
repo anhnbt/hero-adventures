@@ -1,32 +1,25 @@
 import Game from './game.js';
 
-const GAME_WIDTH = 960;
-const GAME_HEIGHT = 540;
-let canvas = document.getElementById('myCanvas');
-let ctx = canvas.getContext('2d');
-let lastRender = 0;
+let canvas = document.createElement('canvas');
+const GAME_WIDTH = canvas.width = 480;
+const GAME_HEIGHT = canvas.height = 270;
+let context = canvas.getContext('2d');
+let start = 0;
+document.body.insertBefore(canvas, document.body.childNodes[0]);
 
-let game = new Game(GAME_WIDTH, GAME_HEIGHT);
-game.start();
-window.requestAnimationFrame(loop); // the image is fully loaded sostart animating
+let myGameArea = new Game(GAME_WIDTH, GAME_HEIGHT);
+myGameArea.start(); // startGame
+window.requestAnimationFrame(step); // the image is fully loaded sostart animating
 
-function update(progress) {
-  // Update the state of the world for the elapsed time since last render
-  game.update(progress);
-}
-
-function draw() {
-  // Draw the state of the world
-  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT); // clear canvas
-  game.draw(ctx);
-}
-
-function loop(timestamp) {
-  let progress = timestamp - lastRender;
+function step(timestamp) {
+  if (start === undefined)
+    start = timestamp;
+  const progress = (timestamp - start) / 1000;
   
-  update(progress);
-  draw();
+  myGameArea.update(progress);
+  context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT); // clear canvas
+  myGameArea.draw(context);
 
-  lastRender = timestamp;
-  window.requestAnimationFrame(loop); // the image is fully loaded sostart animating
+  start = timestamp;
+  window.requestAnimationFrame(step); // the image is fully loaded sostart animating
 }
