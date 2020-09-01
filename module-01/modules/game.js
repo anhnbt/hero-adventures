@@ -1,20 +1,15 @@
-import Background from './background.js';
-import Hero from './hero.js';
-import Chicken from './chicken.js';
-import InputHandle from './game_controllers.js';
-
-export default class Game {
-  constructor(gameWidth, gameHeight) {
+class Game {
+  constructor(width, height) {
     // Variables
-    this.gameWidth = gameWidth;
-    this.gameHeight = gameHeight;
+    this.width = width;
+    this.height = height;
   }
   
   start() {
     this.backgound = new Background(this);
     this.hero = new Hero(this);
     this.chicken = new Chicken(this);
-    new InputHandle(this.hero);
+    // new InputHandle(this.hero);
   }
 
   update(progress) {

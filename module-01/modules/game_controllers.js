@@ -1,4 +1,4 @@
-export default class InputHandler {
+class InputHandler {
   constructor(hero) {
     window.addEventListener('keydown', function (event) {
       switch (event.keyCode) {

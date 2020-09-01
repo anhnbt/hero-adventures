@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +13,81 @@
     }
   </style>
 </head>
+
 <body>
-  <script type="module" src="./modules/game.js"></script>
-  <script type="module" src="./modules/background.js"></script>
-  <script type="module" src="./modules/hero.js"></script>
-  <script type="module" src="./modules/main.js"></script>
+  <canvas id="gamecanvas" width="480" height="270"></canvas>
+  <button onclick="restartGame()">Restart</button>
+  <script type="text/javascript" src="./modules/Background.js"></script>
+  <script type="text/javascript" src="./modules/Sky.js"></script>
+  <script type="text/javascript" src="./modules/Sprite.js"></script>
+  <script type="text/javascript" src="./modules/Hero.js"></script>
+  <script type="text/javascript" src="./modules/Chicken.js"></script>
+  <script>
+    const game = {
+      isRunning: true,
+      
+      init() {
+        console.log("Start Game!");
+        game.canvas = document.getElementById('gamecanvas');
+        game.context = game.canvas.getContext('2d');
+
+        this.sky = new Sky(0, 0, game.canvas.width, game.canvas.height, game.context);
+        this.rocks = new Rocks(0, 0, game.canvas.width, game.canvas.height, game.context);
+        this.hills = new Hills(0, 0, game.canvas.width, game.canvas.height, game.context);
+        this.clouds = new Clouds(0, 0, game.canvas.width, game.canvas.height, game.context);
+        this.hillsCastle = new HillsCastle(0, 0, game.canvas.width, game.canvas.height, game.context);
+        this.treesRocks = new TreesRocks(0, 0, game.canvas.width, game.canvas.height, game.context);
+        this.ground = new Ground(0, 0, game.canvas.width, game.canvas.height, game.context);
+
+        this.hero = new Hero(50, 170, game.context);
+        this.chicken = new Chicken(game.canvas.width, 190, game.context);
+
+        // Start game
+        game.drawingLoop();
+
+        window.addEventListener('keydown', function (e) {
+          game.key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+          game.key = false;
+        })
+      },
+
+      drawingLoop() {
+        // Clear canvas
+        game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
+
+        game.sky.render();
+        game.rocks.render();
+        game.hills.render();
+        game.clouds.render();
+        game.clouds.update();
+        game.hillsCastle.render();
+        game.treesRocks.render();
+        game.treesRocks.update();
+        game.ground.render();
+
+        game.hero.speedX = -1;
+        if (game.key && game.key == 37) {game.hero.speedX = -1; }
+        if (game.key && game.key == 39) {game.hero.speedX = 1; }
+        if (game.key && game.key == 32) {game.hero.speedY = -1; }
+
+        game.hero.render();
+        game.hero.update();
+
+        game.chicken.render();
+        game.chicken.update();
+
+        if (game.isRunning) {
+          requestAnimationFrame(game.drawingLoop);
+        }
+      }
+    };
+
+    window.addEventListener('load', () => {
+      game.init();
+    });
+  </script>
 </body>
+
 </html>
