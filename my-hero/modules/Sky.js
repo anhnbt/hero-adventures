@@ -1,3 +1,5 @@
+import Background from './Background.js';
+export { Sky, Rocks, Hills, Clouds, HillsCastle, TreesRocks, Ground };
 class Sky extends Background {
   constructor(x, y, width, height, context) {
     super({

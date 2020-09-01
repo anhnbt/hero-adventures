@@ -1,4 +1,4 @@
-class Background {
+export default class Background {
   constructor(options) {
     this.ctx = options.context;
     this.src = options.src; // Path to image sprite sheet
