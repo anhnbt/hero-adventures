@@ -47,8 +47,12 @@ class Sprite {
 
       this.hitBottom();
       
-      if(this.x <= 0) {
-        this.x = 0;
+      if (this.x < -this.width) {
+        this.x = 480-this.width/2;
+      }
+
+      if (this.x > 480) {
+        this.x = -this.width/2;
       }
     }
   }
@@ -81,6 +85,7 @@ class Sprite {
   }
 
   stopMove() {
+    this.row = 0;
     this.accelerate(0.1);
   }
 
@@ -93,10 +98,15 @@ class Sprite {
   }
 
   moveLeft() {
+    // this.frameIndex = 0;
+    this.row = 1;
+    this.ticksPerFrame = 8;
     this.x -= this.speedX;
   }
 
   moveRight() {
+    this.row = 1;
+    this.ticksPerFrame = 8;
     this.x += this.speedX;
   }
 }

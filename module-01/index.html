@@ -51,8 +51,10 @@
         })
         window.addEventListener('keyup', function (e) {
           console.log(e.keyCode);
-          game.keys[e.keyCode] = false;
-          game.hero.stopMove();
+          if (e.keyCode !== 116 && e.keyCode !== 17) {
+            game.keys[e.keyCode] = false;
+            game.hero.stopMove();
+          }
         })
       },
 
