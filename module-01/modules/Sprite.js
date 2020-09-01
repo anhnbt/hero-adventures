@@ -7,6 +7,10 @@ class Sprite {
     this.width = options.width;
     this.height = options.height;
     this.speedX = options.speedX;
+    this.speedY = options.speedY;
+    
+    this.gravity = options.gravity;
+    this.gravitySpeed = options.gravitySpeed;
 
     this.frames = options.frames; // Number of frames in a row
     this.frameIndex = options.frameIndex; // Current frame
@@ -15,6 +19,7 @@ class Sprite {
     this.tickCount = options.tickCount; // How much time has passed
 
     this.type = options.type;
+    this.image = new Image();
   }
 
   update() {
@@ -36,7 +41,11 @@ class Sprite {
       }
     }
     if (this.type === 'hero') {
-      this.x += this.speedX;
+      this.gravitySpeed += this.gravity;
+      this.y += this.speedY + this.gravitySpeed;
+      // this.x += this.speedX;
+
+      this.hitBottom();
       
       if(this.x <= 0) {
         this.x = 0;
@@ -45,18 +54,49 @@ class Sprite {
   }
 
   render() {
-    const image = new Image();
-    image.src = this.src;
+    this.image.src = this.src;
     this.ctx.drawImage(
-      image,
-      this.frameIndex * this.width, // The x-axis coordinate of the top left corner
-      this.row * this.height, // The y-axis coordinate of the top left corner
-      this.width, // The width of the sub-rectangle
-      this.height, // The height of the sub-rectangle
-      this.x, // The x coordinate
-      this.y,// The y coordinate
-      this.width, // The width to draw the image
-      this.height // The width to draw the image
-  );
+      this.image,
+        this.frameIndex * this.width, // The x-axis coordinate of the top left corner
+        this.row * this.height, // The y-axis coordinate of the top left corner
+        this.width, // The width of the sub-rectangle
+        this.height, // The height of the sub-rectangle
+        this.x, // The x coordinate
+        this.y,// The y coordinate
+        this.width, // The width to draw the image
+        this.height // The width to draw the image
+    );
+  }
+
+  hitBottom() {
+    if (this.y > 170) {
+      this.y = 170;
+      this.gravitySpeed = 0;
+    }
+
+    if (this.y < 0) {
+      this.y = 0;
+      this.gravitySpeed = 0;
+    }
+  }
+
+  stopMove() {
+    this.accelerate(0.1);
+  }
+
+  accelerate(n) {
+    this.gravity = n;
+  }
+
+  jump() {
+    this.accelerate(-0.5);
+  }
+
+  moveLeft() {
+    this.x -= this.speedX;
+  }
+
+  moveRight() {
+    this.x += this.speedX;
   }
 }

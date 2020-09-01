@@ -39,17 +39,20 @@
         this.treesRocks = new TreesRocks(0, 0, game.canvas.width, game.canvas.height, game.context);
         this.ground = new Ground(0, 0, game.canvas.width, game.canvas.height, game.context);
 
-        this.hero = new Hero(50, 170, game.context);
+        this.hero = new Hero(50, 90, game.context);
         this.chicken = new Chicken(game.canvas.width, 190, game.context);
 
         // Start game
         game.drawingLoop();
 
         window.addEventListener('keydown', function (e) {
-          game.key = e.keyCode;
+          game.keys = (game.keys || []);
+          game.keys[e.keyCode] = true;
         })
         window.addEventListener('keyup', function (e) {
-          game.key = false;
+          console.log(e.keyCode);
+          game.keys[e.keyCode] = false;
+          game.hero.stopMove();
         })
       },
 
@@ -67,10 +70,11 @@
         game.treesRocks.update();
         game.ground.render();
 
-        game.hero.speedX = -1;
-        if (game.key && game.key == 37) {game.hero.speedX = -1; }
-        if (game.key && game.key == 39) {game.hero.speedX = 1; }
-        if (game.key && game.key == 32) {game.hero.speedY = -1; }
+        // game.hero.speedX = 0;
+        // game.hero.speedY = 0;
+        if (game.keys && game.keys[37]) { game.hero.moveLeft(); }
+        if (game.keys && game.keys[39]) { game.hero.moveRight(); }
+        if (game.keys && game.keys[32]) { game.hero.jump(); }
 
         game.hero.render();
         game.hero.update();

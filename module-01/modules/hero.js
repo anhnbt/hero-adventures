@@ -7,13 +7,17 @@ class Hero extends Sprite {
       y: y,
       width: 100,
       height: 55,
-      speedX: -1,
+      speedX: 3,
+      speedY: 0,
       type: 'hero',
       frameIndex: 0,
       row: 0,
       tickCount: 0,
       ticksPerFrame: 5,
-      frames: 8
+      frames: 8,
+    
+      gravity: 0.1,
+      gravitySpeed: 0
     })
   }
 }
