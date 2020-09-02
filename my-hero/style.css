@@ -1,13 +1,27 @@
-html, body {
+/* All margins and padding must be zero for the canvas to fill the screen. */
+body {
+  background-color: #f0f0f2;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  touch-action: none;
+  -ms-touch-action: none;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+canvas {
+  touch-action-delay: none;
+  touch-action: none;
+  -ms-touch-action: none;
 }
 
 .wrapper {
   width: 480px;
   height: 270px;
   position: relative;
-  margin: 50px auto;
+  background-color: #fdfdff;
+  border-radius: 0.5em;
+  box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+  margin: 5em auto;
   border: 10px solid;
 }
 
@@ -33,4 +47,13 @@ html, body {
 h1 {
   color: #ffcc00;
   text-shadow: 1px 1px 0 #444;
+}
+
+p {
+  color: white;
+  text-shadow: 1px 1px 0 #444;
+}
+
+#startBtn {
+  cursor: pointer;
 }

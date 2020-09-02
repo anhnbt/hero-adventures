@@ -1,9 +1,10 @@
 import Sprite from './Sprite.js';
 
 export default class Chicken extends Sprite {
-  constructor(x, y, context) {
+  constructor(x, y, context, sort) {
     super({
       type          : 'chicken',
+      sort          : sort,
       context       : context,
       src           : './assets/images/Run.png',
       x             : x,

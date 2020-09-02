@@ -18,7 +18,7 @@ export default class Hero extends Sprite {
       ticksPerFrame : 5,
       frames        : 8,
     
-      gravity       : 0.1,
+      gravity       : 0.2,
       gravitySpeed  : 0
     })
   }

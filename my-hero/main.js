@@ -18,7 +18,9 @@ const game = {
     this.ground      = new Ground(0, 0, this.canvas.width, this.canvas.height, this.context);
 
     this.hero        = new Hero(50, 90, this.context);
-    this.chicken     = new Chicken(this.canvas.width, 205, this.context);
+    this.chicken_1   = new Chicken(this.canvas.width, 205, this.context, 1);
+    this.chicken_2   = new Chicken(this.canvas.width*2/2, 205, this.context, 2);
+    this.chicken_3   = new Chicken(this.canvas.width*3/2, 205, this.context, 3);
 
     // Start game
     this.draw();
@@ -31,6 +33,16 @@ const game = {
       game.key = false;
       game.hero.stopMove();
     });
+    
+    this.canvas.addEventListener("touchstart", function(e) {
+      e.preventDefault();
+      game.key = 32;
+    }, false);
+    this.canvas.addEventListener("touchend", function(e) {
+      e.preventDefault();
+      game.key = false;
+      game.hero.stopMove();
+    }, false);
   },
 
   draw() {
@@ -52,10 +64,18 @@ const game = {
     game.hero.render();
     game.hero.update();
 
-    game.chicken.render();
-    game.chicken.update();
+    game.chicken_1.render();
+    game.chicken_1.update();
 
-    if (game.chicken.x > 10 && game.chicken.x <= 60 && game.hero.y >= 180) {
+    game.chicken_2.render();
+    game.chicken_2.update();
+
+    game.chicken_3.render();
+    game.chicken_3.update();
+
+    if ((game.chicken_1.x > 10 && game.chicken_1.x <= 60
+      || game.chicken_2.x > 10 && game.chicken_2.x <= 60
+      || game.chicken_3.x > 10 && game.chicken_3.x <= 60) && game.hero.y >= 180) {
       document.getElementById('myTitle').innerText = 'Game Over!';
       document.getElementById('startBtn').innerText = 'Play again';
       document.getElementById('myfilter').style.display = "block";
@@ -69,13 +89,16 @@ const game = {
   }
 };
 
-// window.addEventListener('load', function() {
-// });
+function startup() {
+  game.init();
+}
+
+document.addEventListener("DOMContentLoaded", startup);
 
 let startBtn = document.getElementById('startBtn');
 startBtn.addEventListener('click', function() {
-  game.isRunning = true;
-  game.init();
   document.getElementById('myfilter').style.display = "none";
   document.getElementById('myButton').style.display = "none";
+  game.isRunning = true;
+  game.init();
 })

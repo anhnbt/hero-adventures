@@ -1,5 +1,6 @@
 export default class Sprite {
   constructor(options) {
+    this.sort        = options.sort;
     this.ctx           = options.context;
     this.src           = options.src;
     this.x             = options.x;
@@ -20,6 +21,7 @@ export default class Sprite {
 
     this.type          = options.type;
     this.image         = new Image();
+    this.self = this;
   }
 
   update() {
@@ -37,7 +39,13 @@ export default class Sprite {
       this.x += this.speedX;
       
       if (this.x < -this.width) {
-        this.x = 480;
+        if (this.sort === 1) {
+          this.x = 480;
+        } else if (this.sort === 2) {
+          this.x = 480*2/2;
+        } else {
+          this.x = 480*3/2;
+        }
       }
     }
     if (this.type === 'hero') {
@@ -86,7 +94,7 @@ export default class Sprite {
 
   stopMove() {
     this.row = 0;
-    this.accelerate(0.1);
+    this.accelerate(0.2);
   }
 
   accelerate(n) {
@@ -94,7 +102,7 @@ export default class Sprite {
   }
 
   jump() {
-    this.accelerate(-0.5);
+    this.accelerate(-0.6);
   }
 
   moveLeft() {
