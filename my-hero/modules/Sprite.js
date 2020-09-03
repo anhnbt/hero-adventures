@@ -1,7 +1,7 @@
 export default class Sprite {
   constructor(options) {
-    this.sort        = options.sort;
-    this.ctx           = options.context;
+    this.game          = options.game;
+    this.sort          = options.sort;
     this.src           = options.src;
     this.x             = options.x;
     this.y             = options.y;
@@ -13,63 +13,66 @@ export default class Sprite {
     this.gravity       = options.gravity;
     this.gravitySpeed  = options.gravitySpeed;
 
-    this.frames        = options.frames; // Number of frames in a row
-    this.frameIndex    = options.frameIndex; // Current frame
+    this.totalFrames   = options.totalFrames; // Number of Frames in a row
+    this.frameNumber   = options.frameNumber; // Current frame
     this.row           = options.row; // Row of sprites
     this.ticksPerFrame = options.ticksPerFrame; // Speed of animation
     this.tickCount     = options.tickCount; // How much time has passed
 
     this.type          = options.type;
+    this.die           = options.death;
     this.image         = new Image();
-    this.self = this;
   }
 
   update() {
     this.tickCount++;
     if (this.tickCount > this.ticksPerFrame) {
         this.tickCount = 0;
-        if (this.frameIndex < this.frames - 1) {
-            this.frameIndex++;
+        if (this.frameNumber < this.totalFrames - 1) {
+            this.frameNumber++;
         } else {
-            this.frameIndex = 0;
+            this.frameNumber = 0;
         }
     }
 
-    if (this.type === 'chicken') {
+    if (this.type === 'chicken' && !this.die) {
       this.x += this.speedX;
       
-      if (this.x < -this.width) {
+      if (this.x < -this.width*2) {
         if (this.sort === 1) {
-          this.x = 480;
+          this.x = this.game.width;
         } else if (this.sort === 2) {
-          this.x = 480*2/2;
+          this.x = this.game.width*1.5
         } else {
-          this.x = 480*3/2;
+          this.x = this.game.width*2;
         }
       }
     }
     if (this.type === 'hero') {
+      if (this.y >= 190 && !this.die) {
+        this.src = './assets/images/Sprites/Run.png';
+      }
       this.gravitySpeed += this.gravity;
       this.y += this.speedY + this.gravitySpeed;
-      // this.x += this.speedX;
 
       this.hitBottom();
       
       if (this.x < -this.width) {
-        this.x = 480-this.width/2;
+        this.x = this.game.width-this.width/2;
       }
 
-      if (this.x > 480) {
+      if (this.x > this.game.width) {
         this.x = -this.width/2;
       }
     }
   }
 
-  render() {
+  draw(ctx) {
     this.image.src = this.src;
-    this.ctx.drawImage(
+    ctx.save();
+    ctx.drawImage(
       this.image,
-      this.frameIndex * this.width, // The x-axis coordinate of the top left corner
+      this.frameNumber * this.width, // The x-axis coordinate of the top left corner
       this.row * this.height, // The y-axis coordinate of the top left corner
       this.width, // The width of the sub-rectangle
       this.height, // The height of the sub-rectangle
@@ -77,12 +80,13 @@ export default class Sprite {
       this.y-this.height/2,// The y coordinate
       this.width, // The width to draw the image
       this.height // The width to draw the image
-    );
+      );
+    ctx.restore();
   }
 
   hitBottom() {
-    if (this.y > 200-8) {
-      this.y = 200-8;
+    if (this.y > 195) {
+      this.y = 195;
       this.gravitySpeed = 0;
     }
 
@@ -90,31 +94,5 @@ export default class Sprite {
       this.y = this.height/2;
       this.gravitySpeed = 0;
     }
-  }
-
-  stopMove() {
-    this.row = 0;
-    this.accelerate(0.2);
-  }
-
-  accelerate(n) {
-    this.gravity = n;
-  }
-
-  jump() {
-    this.accelerate(-0.6);
-  }
-
-  moveLeft() {
-    // this.frameIndex = 0;
-    this.row = 1;
-    this.ticksPerFrame = 8;
-    this.x -= this.speedX;
-  }
-
-  moveRight() {
-    this.row = 1;
-    this.ticksPerFrame = 8;
-    this.x += this.speedX;
   }
 }

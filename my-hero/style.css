@@ -1,6 +1,11 @@
 /* All margins and padding must be zero for the canvas to fill the screen. */
 body {
-  background-color: #f0f0f2;
+  height: 100%;
+  background-image: url('./assets/images/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   margin: 0;
   padding: 0;
   overflow: hidden;

@@ -1,14 +1,14 @@
 export default class Background {
   constructor(options) {
-    this.ctx = options.context;
-    this.src = options.src; // Path to image sprite sheet
-    this.x = options.x; // Coordinates on canvas
-    this.y = options.y;
-    this.width = options.width; // Size of sprite frame
+    this.ctx    = options.context;
+    this.src    = options.src; // Path to image sprite sheet
+    this.x      = 0; // Coordinates on canvas
+    this.y      = 0;
+    this.width  = options.width; // Size of sprite frame
     this.height = options.height;
     this.speedX = options.speedX;
 
-    this.type = options.type;
+    this.type   = options.type;
   }
 
   update() {
@@ -18,13 +18,15 @@ export default class Background {
     }
   }
 
-  render() {
-    const image = new Image();
+  draw(ctx) {
+    const image  = new Image();
     image.src = this.src;
-    this.ctx.drawImage(image, this.x, this.y, this.width, this.height);
+    ctx.save();
+    ctx.drawImage(image, this.x, this.y, this.width, this.height);
     if (this.type === 'animation') {
-      this.ctx.drawImage(image, this.x + this.width, this.y, this.width, this.height);
+      ctx.drawImage(image, this.x + this.width, this.y, this.width, this.height);
     }
+    ctx.restore();
   }
 
 }

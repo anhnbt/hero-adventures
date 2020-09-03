@@ -3,26 +3,27 @@ import Chicken from './modules/Chicken.js';
 import Hero from './modules/Hero.js';
 
 const game = {
+  width: 480,
+  height: 270,
   isRunning: false,
+  score: 0,
   
   init() {
     this.canvas      = document.getElementById('gamecanvas');
     this.context     = this.canvas.getContext('2d');
+    this.sky         = new Sky(this);
+    this.rocks       = new Rocks(this);
+    this.hills       = new Hills(this);
+    this.clouds      = new Clouds(this);
+    this.hillsCastle = new HillsCastle(this);
+    this.treesRocks  = new TreesRocks(this);
+    this.ground      = new Ground(this);
 
-    this.sky         = new Sky(0, 0, this.canvas.width, this.canvas.height, this.context);
-    this.rocks       = new Rocks(0, 0, this.canvas.width, this.canvas.height, this.context);
-    this.hills       = new Hills(0, 0, this.canvas.width, this.canvas.height, this.context);
-    this.clouds      = new Clouds(0, 0, this.canvas.width, this.canvas.height, this.context);
-    this.hillsCastle = new HillsCastle(0, 0, this.canvas.width, this.canvas.height, this.context);
-    this.treesRocks  = new TreesRocks(0, 0, this.canvas.width, this.canvas.height, this.context);
-    this.ground      = new Ground(0, 0, this.canvas.width, this.canvas.height, this.context);
+    this.hero        = new Hero(80, 95, this);
+    this.chicken_1   = new Chicken(this.width, 205, 1, this);
+    this.chicken_2   = new Chicken(this.width*1.5, 205, 2, this);
+    this.chicken_3   = new Chicken(this.width*2, 205, 3, this);
 
-    this.hero        = new Hero(50, 90, this.context);
-    this.chicken_1   = new Chicken(this.canvas.width, 205, this.context, 1);
-    this.chicken_2   = new Chicken(this.canvas.width*2/2, 205, this.context, 2);
-    this.chicken_3   = new Chicken(this.canvas.width*3/2, 205, this.context, 3);
-
-    // Start game
     this.draw();
 
     window.addEventListener('keydown', function (e) {
@@ -45,43 +46,71 @@ const game = {
     }, false);
   },
 
-  draw() {
-    // Clear canvas
-    game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
-
-    game.sky.render();
-    game.rocks.render();
-    game.hills.render();
-    game.clouds.render();
-    game.clouds.update();
-    game.hillsCastle.render();
-    game.treesRocks.render();
-    game.treesRocks.update();
-    game.ground.render();
-
-    if (game.key && game.key === 32) { game.hero.jump(); }
-
-    game.hero.render();
-    game.hero.update();
-
-    game.chicken_1.render();
-    game.chicken_1.update();
-
-    game.chicken_2.render();
-    game.chicken_2.update();
-
-    game.chicken_3.render();
-    game.chicken_3.update();
-
-    if ((game.chicken_1.x > 10 && game.chicken_1.x <= 60
-      || game.chicken_2.x > 10 && game.chicken_2.x <= 60
-      || game.chicken_3.x > 10 && game.chicken_3.x <= 60) && game.hero.y >= 180) {
+  gameOver() {
+    game.hero.death();
+    game.chicken_1.death();
+    game.chicken_2.death();
+    game.chicken_3.death();
+    setTimeout(function() {
+      game.isRunning = false;
       document.getElementById('myTitle').innerText = 'Game Over!';
       document.getElementById('startBtn').innerText = 'Play again';
       document.getElementById('myfilter').style.display = "block";
       document.getElementById('myButton').style.display = "block";
-      game.isRunning = false;
+    }, 1600);
+  },
+
+  draw() {
+    // Clear canvas
+    game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
+
+    game.sky.draw(game.context);
+    game.rocks.draw(game.context);
+    game.hills.draw(game.context);
+    game.clouds.draw(game.context);
+    game.clouds.update();
+    game.hillsCastle.draw(game.context);
+    game.treesRocks.draw(game.context);
+    game.treesRocks.update();
+    game.ground.draw(game.context);
+    game.ground.update();
+
+    
+    game.chicken_1.draw(game.context);
+    game.chicken_1.update();
+
+    game.chicken_2.draw(game.context);
+    game.chicken_2.update();
+
+    game.chicken_3.draw(game.context);
+    game.chicken_3.update();
+
+    if (game.key && game.key === 32) {
+      game.hero.jump();
     }
+    
+    game.hero.draw(game.context);
+    game.hero.update();
+
+    if ((game.chicken_1.x >= 80 && game.chicken_1.x <= 100
+      || game.chicken_2.x >= 80 && game.chicken_2.x <= 100
+      || game.chicken_3.x >= 80 && game.chicken_3.x <= 100) && game.hero.y >= 190) {
+      game.gameOver();
+    }
+    // if (
+    //   game.hero.x <= (game.chicken_1.x + game.chicken_1.width/2)
+    //   && game.chicken_1.x <= (game.hero.x + game.hero.width/2)
+    //   && game.hero.y <= (game.chicken_1.y + game.chicken_1.height/2)
+    //   && game.chicken_1.y <= (game.hero.y + game.hero.height/2)
+    // ) {
+    //   game.score += 10;
+    // }
+
+    game.context.fillStyle = "rgb(250, 250, 250)";
+    game.context.font = "24px Helvetica";
+    game.context.textAlign = "left";
+    game.context.textBaseline = "top";
+    game.context.fillText("Score: " + game.score, game.width/2-50, 32);
 
     if (game.isRunning) {
       requestAnimationFrame(game.draw);
