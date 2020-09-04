@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hero Adventures</title>
+  <!-- Cho phép chế độ toàn màn hình trên thiết bị iOS -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+  <link rel="shortcut icon" sizes="16x16" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <script>
+    if (window.location.protocol.substr(0, 4) === "file") {
+      alert("Để game chạy được, vui lòng deploy dự án.");
+    }
+  </script>
+  <div class="wrapper">
+
+    <div id="myfilter"></div>
+    <div id="myButton">
+      <h1 id="myTitle">Hero Adventures</h1>
+      <p>Nhấn phím Space để điều khiển Hero</p>
+      <img id="startBtn" src="./assets/images/startbtn.png" alt="Start" width="100px">
+    </div>
+    <canvas id="gamecanvas" width="480" height="270">
+      Trình duyệt của bạn không hỗ trợ Canvas.
+    </canvas>
+
+  </div><!-- .wrapper -->
+
+  <!-- Để scripts ở dưới để trang tải nhanh hơn -->
+  <script type="module" src="./modules/Background.js"></script>
+  <script type="module" src="./modules/Sky.js"></script>
+  <script type="module" src="./modules/Sprite.js"></script>
+  <script type="module" src="./modules/Hero.js"></script>
+  <script type="module" src="./modules/Bee.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>
