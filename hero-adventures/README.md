@@ -1,6 +1,6 @@
 # Hero Adventures - HTML5 2D Side Scroller
 
-> [Chơi thử](https://anhnbt-it.github.io/case-study/my-hero/index.html)
+> [Chơi thử](https://anhnbt-it.github.io/case-study/hero-adventures/index.html)
 ## Hướng dẫn
 Nhấn phím Space để điều khiển nhân vật **Hero**
 
