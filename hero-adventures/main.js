@@ -4,13 +4,13 @@ import Hero from './modules/Hero.js';
 import Coin from './modules/Coin.js';
 
 const game = {
-  width: 480,
-  height: 270,
-  isRunning: false,
-  rightPressed: false,
-  leftPressed: false,
-  jumpPressed: false,
-  score: 0,
+  width        : 480,
+  height       : 270,
+  isRunning    : false,
+  rightPressed : false,
+  leftPressed  : false,
+  jumpPressed  : false,
+  score        : 0,
   
   init() {
     this.score       = 0;
@@ -20,6 +20,9 @@ const game = {
     this.footAudio   = document.getElementById("footAudio");
     this.getAudio    = document.getElementById("getAudio");
     this.dieAudio    = document.getElementById("dieAudio");
+    this.jumpAudio   = document.getElementById("jumpAudio");
+    this.bgAudio     = document.getElementById("bgAudio");
+    this.readyAudio  = document.getElementById("readyAudio");
     this.sky         = new Sky(this);
     this.rocks       = new Rocks(this);
     this.hills       = new Hills(this);
@@ -27,16 +30,15 @@ const game = {
     this.hillsCastle = new HillsCastle(this);
     this.treesRocks  = new TreesRocks(this);
     this.ground      = new Ground(this);
-    
-    this.coins       = [];
-    this.coins.push(new Coin(this.width/2, 200, this));
-    this.coins.push(new Coin(this.width, 200, this));
-
-    this.monsters    = [];
-    this.monsters.push(new Monster(this.width/2+this.width/4, 220, this));
-    this.monsters.push(new Monster(this.width+this.width/4, 220, this));
-    
-    this.hero        = new Hero(100, 225, this);
+    this.hero        = new Hero(100, 220, this);
+    this.coins       = [
+      new Coin(this.width/2, 200, this),
+      new Coin(this.width, 200, this)
+    ];
+    this.monsters    = [
+      new Monster(this.width/2+this.width/4, 220, this),
+      new Monster(this.width+this.width/4, 220, this)
+    ];
 
     this.draw();
 
@@ -136,6 +138,7 @@ const game = {
     }
     
     if (game.jumpPressed) {
+      game.jumpAudio.play();
       game.hero.jump();
     }
 
@@ -167,6 +170,8 @@ function startGame() {
 document.addEventListener("DOMContentLoaded", startGame);
 
 document.getElementById('startBtn').addEventListener('click', function() {
+  game.readyAudio.play();
+  game.bgAudio.play();
   document.getElementById('myfilter').style.display = "none";
   document.getElementById('myButton').style.display = "none";
   game.isRunning = true;
