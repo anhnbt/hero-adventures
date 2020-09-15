@@ -8,88 +8,71 @@ export default class Sprite {
     this.dy            = options.y;
     this.width         = options.width;
     this.height        = options.height;
-    this.scale         = options.scale;
-    this.speedX        = options.speedX;
-    this.speedY        = options.speedY;
+    this.scale         = (options.scale) ? options.scale : 1;
+    this.speedX        = (options.speedX) ? options.speedX : 0;
+    this.speedY        = (options.speedY) ? options.speedY : 0;
     
-    this.gravity       = options.gravity;
-    this.gravitySpeed  = options.gravitySpeed;
+    this.gravity       = (options.gravity) ? options.gravity : 0;
+    this.gravitySpeed  = (options.gravitySpeed) ? options.gravitySpeed : 0;
+    this.isDead        = options.isDead;
 
-    this.totalFrames   = options.totalFrames; // Number of Frames in a row
-    this.frameNumber   = options.frameNumber; // Current frame
-    this.row           = options.row; // Row of sprites
-    this.ticksPerFrame = options.ticksPerFrame; // Speed of animation
-    this.tickCount     = options.tickCount; // How much time has passed
-
-    this.type          = options.type;
-    this.status        = options.status;
+    this.animations    = {
+      type          : options.animations.type,
+      frameNumber   : options.animations.frameNumber, // Current frame
+      length        : options.animations.length,
+      row           : options.animations.row, // Row of sprites
+      tickCount     : options.animations.tickCount, // How much time has passed
+      ticksPerFrame : options.animations.ticksPerFrame, // Speed of animation
+      totalFrames   : options.animations.totalFrames, // Number of Frames in a row
+    }
     this.image         = new Image();
   }
 
   update() {
-    this.tickCount++;
-    if (this.tickCount > this.ticksPerFrame) {
-        this.tickCount = 0;
-        if (this.frameNumber < this.totalFrames - 1) {
-            this.frameNumber++;
-        } else {
-            this.frameNumber = 0;
-        }
-    }
-
-    if (this.type === 'coin') {
-      this.x += this.speedX;
-      if (this.x <= this.game.width) {
-        this.status = true;
+    if (!this.game.isRunning) return;
+    this.animations.tickCount++;
+    if (this.animations.tickCount > this.animations.ticksPerFrame) {
+      this.animations.tickCount = 0;
+      if (this.animations.frameNumber < this.animations.totalFrames - 1) {
+        this.animations.frameNumber++;
+      } else {
+        this.animations.frameNumber = 0;
       }
     }
 
-    if (this.type === 'monster' && this.status) {
+    if (this.animations.type === 'Coin' || this.animations.type === 'Monster') {
       this.x += this.speedX;
-      
+    }
+
+    if (this.animations.type === 'Monster') {
       if (this.x < -this.width) {
         this.x = this.game.width;
       }
     }
-    if (this.type === 'hero') {
-      if (this.y >= this.dy && this.status) {
-        this.src = './assets/images/HeroKnight/Run.png';
-      }
+
+    if (this.animations.type === 'Hero') {
+      
       this.gravitySpeed += this.gravity;
       this.y += this.speedY + this.gravitySpeed;
-
-      this.hitBottom();
       
-      if (this.x < -this.width) {
-        this.x = this.game.width-this.width/2;
+      if (this.x < this.width) {
+        this.x = this.width;
       }
-
+      
       if (this.x > this.game.width) {
-        this.x = -this.width/2;
+        this.x = this.game.width;
       }
-    }
-    
-    if (this.type === 'bee') {
-      this.y += this.speedY;
-      this.x += this.speedX;
-
-      if(this.x > this.game.width-this.width/2 || this.x < this.width/2) {
-        this.speedX = -this.speedX;
-      }
-
-      if(this.y > this.game.height/2 || this.y < 0) {
-        this.speedY = -this.speedY;
-      }
+      this.hitRoad();
     }
   }
 
-  draw(ctx) {
+  draw() {
     this.image.src = this.src;
-    ctx.save();
-    ctx.drawImage(
+    this.game.ctx.save();
+    this.game.ctx.drawImage(
       this.image,
-      this.frameNumber * this.width, // The x-axis coordinate of the top left corner
-      this.row * this.height, // The y-axis coordinate of the top left corner
+      this.animations.frameNumber * this.width, // The x-axis coordinate of the top left corner
+      this.animations.row * this.height, // The y-axis coordinate of the top left corner
       this.width, // The width of the sub-rectangle
       this.height, // The height of the sub-rectangle
       this.x-this.width/this.scale, // The x coordinate
@@ -97,11 +80,13 @@ export default class Sprite {
       this.width/this.scale, // The width to draw the image
       this.height/this.scale // The width to draw the image
       );
-    ctx.restore();
+    this.game.ctx.restore();
   }
 
-  hitBottom() {
+  hitRoad() {
     if (this.y > this.dy) {
+      this.animations.frameNumber = 4;
+      this.animations.totalFrames = 1;
       this.y = this.dy;
       this.gravitySpeed = 0;
     }

@@ -3,11 +3,10 @@ export { Sky, Rocks, Hills, Clouds, HillsCastle, TreesRocks, Ground };
 class Sky extends Background {
   constructor(game) {
     super({
-      src: './assets/images/Layers/layer07_Sky.png',
-      width: game.width,
-      height: game.width,
-      speedX: 0,
-      type: 'image'
+      game   : game,
+      src    : './assets/images/Layers/layer07_Sky.png',
+      width  : game.width,
+      height : game.width
     });
   }
 }
@@ -15,11 +14,10 @@ class Sky extends Background {
 class Rocks extends Background {
   constructor(game) {
     super({
-      src: './assets/images/Layers/layer06_Rocks.png',
-      width: game.width,
-      height: game.height,
-      speedX: 0,
-      type: 'image'
+      game   : game,
+      src    : './assets/images/Layers/layer06_Rocks.png',
+      width  : game.width,
+      height : game.height
     });
   }
 }
@@ -27,11 +25,10 @@ class Rocks extends Background {
 class Hills extends Background {
   constructor(game) {
     super({
-      src: './assets/images/Layers/layer05_Hills.png',
-      width: game.width,
-      height: game.height,
-      speedX: 0,
-      type: 'image'
+      game   : game,
+      src    : './assets/images/Layers/layer05_Hills.png',
+      width  : game.width,
+      height : game.height
     });
   }
 }
@@ -39,11 +36,12 @@ class Hills extends Background {
 class Clouds extends Background {
   constructor(game) {
     super({
-      src: './assets/images/Layers/layer04_Clouds.png',
-      width: game.width,
-      height: game.height,
-      speedX: -0.3,
-      type: 'animation'
+      game   : game,
+      src    : './assets/images/Layers/layer04_Clouds.png',
+      width  : game.width,
+      height : game.height,
+      speedX : -0.3,
+      type   : 'animation'
     });
   }
 }
@@ -51,11 +49,10 @@ class Clouds extends Background {
 class HillsCastle extends Background {
   constructor(game) {
     super({
-      src: './assets/images/Layers/layer03_Hills_Castle.png',
-      width: game.width,
-      height: game.height,
-      speedX: 0,
-      type: 'image'
+      game   : game,
+      src    : './assets/images/Layers/layer03_Hills_Castle.png',
+      width  : game.width,
+      height : game.height
     });
   }
 }
@@ -63,11 +60,12 @@ class HillsCastle extends Background {
 class TreesRocks extends Background {
   constructor(game) {
     super({
-      src: './assets/images/Layers/layer02_Trees_rocks.png',
-      width: game.width,
-      height: game.height,
-      speedX: -0.1,
-      type: 'animation'
+      game   : game,
+      src    : './assets/images/Layers/layer02_Trees_rocks.png',
+      width  : game.width,
+      height : game.height,
+      speedX : -0.1,
+      type   : 'animation'
     });
   }
 }
@@ -75,11 +73,12 @@ class TreesRocks extends Background {
 class Ground extends Background {
   constructor(game) {
     super({
-      src: './assets/images/Layers/layer01_Ground.png',
-      width: game.width,
-      height: game.height,
-      speedX: -1,
-      type: 'animation'
+      game   : game,
+      src    : './assets/images/Layers/layer01_Ground.png',
+      width  : game.width,
+      height : game.height,
+      speedX : -1,
+      type   : 'animation'
     });
   }
 }

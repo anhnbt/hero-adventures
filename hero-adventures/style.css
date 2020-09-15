@@ -57,6 +57,8 @@ h1 {
 p {
   color: white;
   text-shadow: 1px 1px 0 #444;
+  margin-bottom: 5px;
+  margin-top: 0;
 }
 
 #startBtn {

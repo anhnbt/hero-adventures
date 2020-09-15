@@ -5,9 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Hero Adventures</title>
-  <!-- Cho phép chế độ toàn màn hình trên thiết bị iOS -->
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <link rel="shortcut icon" sizes="16x16" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -23,6 +21,7 @@
     <div id="myfilter"></div>
     <div id="myButton">
       <h1 id="myTitle">Hero Adventures</h1>
+      <p id="myScore"></p>
       <p>Nhấn phím Space để điều khiển Hero</p>
       <img id="startBtn" src="./assets/images/startbtn.png" alt="Start" width="100px">
     </div>
@@ -31,6 +30,10 @@
     </canvas>
 
   </div><!-- .wrapper -->
+
+  <audio id="footAudio" src="./assets/sound/foot.ogg"></audio>
+  <audio id="getAudio" src="./assets/sound/get.ogg"></audio>
+  <audio id="dieAudio" src="./assets/sound/die.ogg"></audio>
 
   <!-- Để scripts ở dưới để trang tải nhanh hơn -->
   <script type="module" src="./modules/Background.js"></script>
