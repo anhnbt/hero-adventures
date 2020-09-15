@@ -42,11 +42,10 @@ export default class Sprite {
 
     if (this.animations.type === 'Coin' || this.animations.type === 'Monster') {
       this.x += this.speedX;
-    }
-
-    if (this.animations.type === 'Monster') {
+      
       if (this.x < -this.width) {
         this.x = this.game.width;
+        this.isDead = false;
       }
     }
 

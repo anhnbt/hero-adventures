@@ -11,7 +11,7 @@ export default class Hero extends Sprite {
       height        : 48,
       scale         : 1,
       speedX        : 3,
-      gravity       : 0.05,
+      gravity       : 0.2,
       gravitySpeed  : 0,
 
       isDead        : false,
