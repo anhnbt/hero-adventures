@@ -1,4 +1,4 @@
-export default class Sprite {
+class Sprite {
   constructor(options) {
     this.game          = options.game;
     this.src           = options.src;
@@ -19,6 +19,7 @@ export default class Sprite {
     this.animations    = {
       type          : options.animations.type,
       frameNumber   : options.animations.frameNumber, // Current frame
+      currentFrame  : options.animations.frameNumber, // Current frame
       length        : options.animations.length,
       row           : options.animations.row, // Row of sprites
       tickCount     : options.animations.tickCount, // How much time has passed
@@ -36,14 +37,14 @@ export default class Sprite {
       if (this.animations.frameNumber < this.animations.totalFrames - 1) {
         this.animations.frameNumber++;
       } else {
-        this.animations.frameNumber = 0;
+        this.animations.frameNumber = this.animations.currentFrame;
       }
     }
 
     if (this.animations.type === 'Coin' || this.animations.type === 'Monster') {
       this.x += this.speedX;
       
-      if (this.x < -this.width) {
+      if (this.x < -this.game.width) {
         this.x = this.game.width;
         this.isDead = false;
       }
@@ -74,25 +75,36 @@ export default class Sprite {
       this.animations.row * this.height, // The y-axis coordinate of the top left corner
       this.width, // The width of the sub-rectangle
       this.height, // The height of the sub-rectangle
-      this.x-this.width/this.scale, // The x coordinate
-      this.y-this.height/this.scale,// The y coordinate
-      this.width/this.scale, // The width to draw the image
-      this.height/this.scale // The width to draw the image
+      this.x-(this.width/this.scale), // The x coordinate
+      this.y-(this.height/this.scale),// The y coordinate
+      (this.width/this.scale), // The width to draw the image
+      (this.height/this.scale) // The width to draw the image
       );
     this.game.ctx.restore();
   }
 
   hitRoad() {
     if (this.y > this.dy) {
-      this.animations.frameNumber = 4;
-      this.animations.totalFrames = 1;
+      this.animations.currentFrame = 1;
+      this.animations.totalFrames = 4;
       this.y = this.dy;
       this.gravitySpeed = 0;
+      this.game.isJumping = false;
     }
 
-    if (this.y < this.height/2) {
-      this.y = this.height/2;
+    if (this.y < this.game.height/2 - 20) {
+      this.y = this.game.height/2 - 20;
+      this.game.jumpPressed = false;
       this.gravitySpeed = 0;
+      this.stopMove();
     }
+  }
+
+  stopMove() {
+    this.accelerate(0.5);
+  }
+
+  accelerate(n) {
+    this.gravity = n;
   }
 }

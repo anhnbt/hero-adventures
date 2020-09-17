@@ -1,6 +1,4 @@
-import Sprite from './Sprite.js';
-
-export default class Monster extends Sprite {
+class Monster extends Sprite {
   constructor(x, y, game) {
     super({
       game          : game,
@@ -9,7 +7,7 @@ export default class Monster extends Sprite {
       y             : y,
       width         : 36,
       height        : 30,
-      speedX        : -1,
+      speedX        : -4,
       
       isDead        : false,
       animations    : {

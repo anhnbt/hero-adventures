@@ -1,6 +1,4 @@
-import Sprite from './Sprite.js';
-
-export default class Coin extends Sprite {
+class Coin extends Sprite {
   constructor(x, y, game) {
     super({
       game          : game,
@@ -10,7 +8,7 @@ export default class Coin extends Sprite {
       width         : 48,
       height        : 48,
       scale         : 2,
-      speedX        : -1,
+      speedX        : -4,
 
       isDead        : false,
       animations    : {

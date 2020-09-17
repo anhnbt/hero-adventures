@@ -1,4 +1,4 @@
-export default class Background {
+class Background {
   constructor(options) {
     this.game   = options.game;
     this.src    = options.src; // Path to image sprite sheet
@@ -15,7 +15,7 @@ export default class Background {
   update() {
     if (!this.game.isRunning) return;
     this.x += this.speedX;
-    if (this.x === -(this.width)) {
+    if (this.x <= -(this.game.width)) {
       this.x = 0;
     }
   }

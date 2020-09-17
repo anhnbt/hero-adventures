@@ -1,6 +1,4 @@
-import Background from './Background.js';
-export { Sky, Rocks, Hills, Clouds, HillsCastle, TreesRocks, Ground };
-class Sky extends Background {
+class Bg extends Background {
   constructor(game) {
     super({
       game   : game,
@@ -77,7 +75,7 @@ class Ground extends Background {
       src    : './assets/images/Layers/layer01_Ground.png',
       width  : game.width,
       height : game.height,
-      speedX : -1,
+      speedX : -4,
       type   : 'animation'
     });
   }

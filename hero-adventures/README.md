@@ -1,12 +1,13 @@
-# Hero Adventures - HTML5 2D Side Scroller
+# Hero Adventures
 
-> [Chơi thử](https://anhnbt-it.github.io/case-study/hero-adventures/index.html)
-## Hướng dẫn
-Nhấn phím Space để điều khiển nhân vật **Hero**
+> [Bấm vào đây để chơi thử](https://anhnbt-it.github.io/case-study/hero-adventures/index.html)
+## Hướng dẫn chơi
+Nhấn phím Space để điều khiển nhân vật **Hero** vượt qua **Monster** (Quái vật)
 
 ## Mục tiêu
-Mục tiêu của trò chơi là điều khiển một nhân vật **Hero** nhẩy qua những chướng ngại vật. Nếu Hero chạm vào chướng ngại vật thì trò chơi sẽ kết thúc. Mỗi lần **Hero** vượt qua một chướng ngại vật thì người chơi nhận được một điểm.
+Mục tiêu của trò chơi là điều khiển một nhân vật **Hero** nhẩy qua những **Monster** (Quái vật). Nếu Hero chạm vào **Monster** thì trò chơi sẽ kết thúc. Mỗi lần **Hero** chạm vào **Coin** (Tiền) thì người chơi nhận được một điểm.
 
 ## Mô tả
-Game viết bằng JavaScript, HTML và CSS
+Game viết bằng JavaScript, HTML5 và CSS.
+
 Một game đơn giản theo phong cách side-scroller. Trong đó người chơi điều khiển một nhân vật **Hero**, cố gắng vượt qua các cạm bẫy trên đường mà không chạm vào chúng.

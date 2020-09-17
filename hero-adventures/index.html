@@ -7,7 +7,7 @@
   <title>Hero Adventures</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <link rel="shortcut icon" sizes="16x16" href="favicon.ico">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
@@ -31,20 +31,21 @@
 
   </div><!-- .wrapper -->
 
-  <audio loop id="bgAudio" src="./assets/sound/play.mp3"></audio>
-  <audio id="readyAudio" src="./assets/sound/readygo.mp3"></audio>
-  <audio id="footAudio" src="./assets/sound/foot.ogg"></audio>
-  <audio id="getAudio" src="./assets/sound/get.ogg"></audio>
-  <audio id="dieAudio" src="./assets/sound/die.ogg"></audio>
-  <audio id="jumpAudio" src="./assets/sound/jump.mp3"></audio>
+  <audio loop id="bgAudio" src="./assets/sounds/play.mp3"></audio>
+  <audio id="readyAudio" src="./assets/sounds/readygo.mp3"></audio>
+  <audio id="coinAudio" src="./assets/sounds/coin.mp3"></audio>
+  <audio id="hitAudio" src="./assets/sounds/die.ogg"></audio>
+  <audio id="gameOverAudio" src="./assets/sounds/gameover.mp3"></audio>
+  <audio id="jumpAudio" src="./assets/sounds/jump.mp3"></audio>
 
   <!-- Để scripts ở dưới để trang tải nhanh hơn -->
-  <script type="module" src="./modules/Background.js"></script>
-  <script type="module" src="./modules/Sky.js"></script>
-  <script type="module" src="./modules/Sprite.js"></script>
-  <script type="module" src="./modules/Hero.js"></script>
-  <script type="module" src="./modules/Bee.js"></script>
-  <script type="module" src="./main.js"></script>
+  <script src="./src/Background.js"></script>
+  <script src="./src/Bg.js"></script>
+  <script src="./src/Sprite.js"></script>
+  <script src="./src/Coin.js"></script>
+  <script src="./src/Monster.js"></script>
+  <script src="./src/Hero.js"></script>
+  <script src="./src/main.js"></script>
 </body>
 
 </html>
