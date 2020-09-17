@@ -2,7 +2,7 @@ const game = {
   width            : 480,
   height           : 270,
   isRunning        : false,
-  keydown          : false,
+  isJumping        : false,
   jumpPressed      : false,
   isSpeedDecrement : false,
   speedX           : 0.2,
