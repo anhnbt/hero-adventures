@@ -18,14 +18,14 @@ class Hero extends Sprite {
         length        : 1,
         row           : 0,
         tickCount     : 0,
-        ticksPerFrame : 8,
+        ticksPerFrame : 5,
         totalFrames   : 4,
       }
     })
   }
 
   jump() {
-    this.animations.currentFrame = 0;
+    this.animations.currentFrame = 1;
     this.animations.totalFrames = 1;
     this.accelerate(-0.5);
   }
