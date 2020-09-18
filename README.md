@@ -1,6 +1,6 @@
 # Hero Adventures
 
-> [Bấm vào đây để chơi thử](https://anhnbt-it.github.io/hero-adventures/index.html)
+> [Bấm vào đây để chơi thử](https://anhnbt-it.github.io/hero-adventures/)
 ## Hướng dẫn chơi
 Nhấn phím Space để điều khiển nhân vật **Hero** vượt qua **Monster** (Quái vật)
 
