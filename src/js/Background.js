@@ -1,3 +1,8 @@
+/**
+ * Hero Adventures - https://github.com/anhnbt-it/hero-adventures
+ * author: Nguyễn Bá Tuấn Anh
+ */
+
 class Background {
   constructor(options) {
     this.game   = options.game;

@@ -1,8 +1,13 @@
+/**
+ * Hero Adventures - https://github.com/anhnbt-it/hero-adventures
+ * author: Nguyễn Bá Tuấn Anh
+ */
+
 class Coin extends Sprite {
   constructor(x, y, game) {
     super({
       game          : game,
-      src           : './assets/images/coin.png',
+      src           : './assets/images/Coin.png',
       x             : x,
       y             : y,
       width         : 48,
@@ -11,8 +16,8 @@ class Coin extends Sprite {
       speedX        : -4,
 
       isDead        : false,
+      type          : 'Coin',
       animations    : {
-        type          : 'Coin',
         frameNumber   : 0,
         length        : 1,
         row           : 0,
@@ -21,5 +26,21 @@ class Coin extends Sprite {
         totalFrames   : 4,
       }
     })    
+  }
+
+  get speed() {
+    return this.speedX;
+  }
+
+  set speed(value) {
+    this.speedX = value;
+  }
+
+  get dead() {
+    return this.isDead;
+  }
+
+  set dead(value) {
+    this.isDead = value;
   }
 }

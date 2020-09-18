@@ -1,11 +1,15 @@
+/**
+ * Hero Adventures - https://github.com/anhnbt-it/hero-adventures
+ * author: Nguyễn Bá Tuấn Anh
+ */
+
 class Sprite {
   constructor(options) {
     this.game          = options.game;
     this.src           = options.src;
     this.x             = options.x;
     this.y             = options.y;
-    this.dx            = options.x;
-    this.dy            = options.y;
+    this.road          = options.y;
     this.width         = options.width;
     this.height        = options.height;
     this.scale         = (options.scale) ? options.scale : 1;
@@ -16,8 +20,9 @@ class Sprite {
     this.gravitySpeed  = (options.gravitySpeed) ? options.gravitySpeed : 0;
     this.isDead        = options.isDead;
 
+    this.image         = new Image();
+    this.type          = options.type;
     this.animations    = {
-      type          : options.animations.type,
       frameNumber   : options.animations.frameNumber, // Current frame
       currentFrame  : options.animations.frameNumber, // Current frame
       length        : options.animations.length,
@@ -26,7 +31,6 @@ class Sprite {
       ticksPerFrame : options.animations.ticksPerFrame, // Speed of animation
       totalFrames   : options.animations.totalFrames, // Number of Frames in a row
     }
-    this.image         = new Image();
   }
 
   update() {
@@ -41,7 +45,7 @@ class Sprite {
       }
     }
 
-    if (this.animations.type === 'Coin' || this.animations.type === 'Monster') {
+    if (this.type === 'Coin' || this.type === 'Monster') {
       this.x += this.speedX;
       
       if (this.x < -this.game.width) {
@@ -50,7 +54,7 @@ class Sprite {
       }
     }
 
-    if (this.animations.type === 'Hero') {
+    if (this.type === 'Hero') {
       
       this.gravitySpeed += this.gravity;
       this.y += this.speedY + this.gravitySpeed;
@@ -62,6 +66,7 @@ class Sprite {
       if (this.x > this.game.width) {
         this.x = this.game.width;
       }
+
       this.hitRoad();
     }
   }
@@ -84,10 +89,10 @@ class Sprite {
   }
 
   hitRoad() {
-    if (this.y > this.dy) {
+    if (this.y > this.road) {
       this.animations.currentFrame = 1;
       this.animations.totalFrames = 4;
-      this.y = this.dy;
+      this.y = this.road;
       this.gravitySpeed = 0;
       this.game.isJumping = false;
     }
@@ -96,12 +101,8 @@ class Sprite {
       this.y = this.game.height/2 - 20;
       this.game.jumpPressed = false;
       this.gravitySpeed = 0;
-      this.stopMove();
+      this.accelerate(0.5);
     }
-  }
-
-  stopMove() {
-    this.accelerate(0.5);
   }
 
   accelerate(n) {

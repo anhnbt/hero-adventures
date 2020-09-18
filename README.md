@@ -1,6 +1,6 @@
 # Hero Adventures
 
-> [Bấm vào đây để chơi thử](https://anhnbt-it.github.io/case-study/hero-adventures/index.html)
+> [Bấm vào đây để chơi thử](https://anhnbt-it.github.io/hero-adventures/index.html)
 ## Hướng dẫn chơi
 Nhấn phím Space để điều khiển nhân vật **Hero** vượt qua **Monster** (Quái vật)
 
@@ -11,3 +11,5 @@ Mục tiêu của trò chơi là điều khiển một nhân vật **Hero** nh�
 Game viết bằng JavaScript, HTML5 và CSS.
 
 Một game đơn giản theo phong cách side-scroller. Trong đó người chơi điều khiển một nhân vật **Hero**, cố gắng vượt qua các cạm bẫy trên đường mà không chạm vào chúng.
+
+© Copyright Nguyễn Bá Tuấn Anh 2020

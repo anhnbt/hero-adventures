@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hero Adventures</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <link rel="shortcut icon" sizes="16x16" href="favicon.ico">
+  <link rel="stylesheet" href="./src/css/style.css">
+</head>
+
+<body>
+  <script>
+    if (window.location.protocol.substr(0, 4) === "file") {
+      alert("Để game chạy được, vui lòng deploy dự án.");
+    }
+  </script>
+  <div class="wrapper">
+
+    <div id="myfilter"></div>
+    <div id="myButton">
+      <h1 id="myTitle">Hero Adventures</h1>
+      <p id="myScore"></p>
+      <p>Nhấn phím Space để điều khiển Hero</p>
+      <button class="btn btn-default" id="mutedBtn">Music Off</button>
+      <button class="btn btn-primary" id="startBtn">Start</button>
+    </div>
+    <canvas id="gamecanvas" width="480" height="270">
+      Trình duyệt của bạn không hỗ trợ Canvas.
+    </canvas>
+
+    <footer><p class="text-center mt-2">&copy; Copyright <a href="https://anhnbt.com/">Nguyễn Bá Tuấn Anh</a> 2020</p></footer>
+  </div><!-- .wrapper -->
+
+
+  <audio loop id="bgAudio" src="./src/sounds/bg.mp3"></audio>
+  <audio id="readyAudio" src="./src/sounds/readygo.mp3"></audio>
+  <audio id="coinAudio" src="./src/sounds/coin.mp3"></audio>
+  <audio id="hitAudio" src="./src/sounds/death.ogg"></audio>
+  <audio id="gameOverAudio" src="./src/sounds/gameover.mp3"></audio>
+  <audio id="jumpAudio" src="./src/sounds/jump.mp3"></audio>
+
+  <!-- Để scripts ở dưới để trang tải nhanh hơn -->
+  <script src="./src/js/Background.js"></script>
+  <script src="./src/js/Bg.js"></script>
+  <script src="./src/js/Sprite.js"></script>
+  <script src="./src/js/Coin.js"></script>
+  <script src="./src/js/Monster.js"></script>
+  <script src="./src/js/Hero.js"></script>
+  <script src="./src/js/main.js"></script>
+</body>
+
+</html>
