@@ -18,12 +18,6 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-canvas {
-  touch-action-delay: none;
-  touch-action: none;
-  -ms-touch-action: none;
-}
-
 .wrapper {
   width: 480px;
   height: 270px;

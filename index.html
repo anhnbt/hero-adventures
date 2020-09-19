@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./src/css/style.css">
 </head>
 
-<body>
+<body onload="startGame();">
   <script>
     if (window.location.protocol.substr(0, 4) === "file") {
       alert("Để game chạy được, vui lòng deploy dự án.");
@@ -33,12 +33,12 @@
   </div><!-- .wrapper -->
 
 
-  <audio loop id="bgAudio" src="./src/sounds/bg.mp3"></audio>
-  <audio id="readyAudio" src="./src/sounds/readygo.mp3"></audio>
-  <audio id="coinAudio" src="./src/sounds/coin.mp3"></audio>
-  <audio id="hitAudio" src="./src/sounds/death.ogg"></audio>
-  <audio id="gameOverAudio" src="./src/sounds/gameover.mp3"></audio>
-  <audio id="jumpAudio" src="./src/sounds/jump.mp3"></audio>
+  <audio id="bgAudio" src="./src/sounds/bg.mp3" loop autoplay preload="none"></audio>
+  <audio id="readyAudio" src="./src/sounds/readygo.mp3" preload="none"></audio>
+  <audio id="coinAudio" src="./src/sounds/coin.mp3" preload="none"></audio>
+  <audio id="hitAudio" src="./src/sounds/death.ogg" preload="none"></audio>
+  <audio id="gameOverAudio" src="./src/sounds/gameover.mp3" preload="none"></audio>
+  <audio id="jumpAudio" src="./src/sounds/jump.mp3" preload="none"></audio>
 
   <!-- Để scripts ở dưới để trang tải nhanh hơn -->
   <script src="./src/js/Background.js"></script>

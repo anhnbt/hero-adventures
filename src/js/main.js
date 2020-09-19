@@ -3,15 +3,15 @@
  * author: Nguyễn Bá Tuấn Anh
  */
 
-const mutedBtn = document.getElementById("mutedBtn");
-const startBtn = document.getElementById("startBtn");
+let mutedBtn = document.getElementById("mutedBtn");
+let startBtn = document.getElementById("startBtn");
+let framesPerSecond = 60;  // FPS valid values are 60,30,20,15,10...
+let requestId;
 
 const game = {
   width            : 480,
   height           : 270,
   isRunning        : false,
-  isJumping        : false,
-  jumpPressed      : false,
   isSpeedDecrement : false,
   speedX           : 0.2,
   score            : 0,
@@ -24,6 +24,7 @@ const game = {
     this.isJumping     = false;
     this.score         = 0;
     this.level         = 0;
+    this.fps           = 0;
     this.canvas        = document.getElementById('gamecanvas');
     this.ctx           = this.canvas.getContext('2d');
     
@@ -73,35 +74,17 @@ const game = {
   },
 
   draw() {
-    game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+    game.ctx.clearRect(0, 0, game.width, game.height);
 
     game.bg.draw();
     game.rocks.draw();
     game.hills.draw();
     game.clouds.draw();
-    game.clouds.update();
     game.hillsCastle.draw();
     game.treesRocks.draw();
-    game.treesRocks.update();
     game.ground.draw();
-    game.ground.update();
-
-    for (let i = 0; i < game.coins.length; i++) {
-      if (!game.coins[i].dead) {
-        game.coins[i].draw();
-      }
-      game.coins[i].update();
-    }
-
-    for (let i = 0; i < game.monsters.length; i++) {
-      if (!game.monsters[i].dead) {
-        game.monsters[i].draw();
-      }
-      game.monsters[i].update();
-    }
     
     game.hero.draw();
-    game.hero.update();
 
     if (game.isPauseMusic) {
       game.bgAudio.pause();
@@ -115,10 +98,32 @@ const game = {
         game.hero.jump();
       }
 
+
+      game.clouds.update();
+      game.treesRocks.update();
+      game.ground.update();
+
+      game.hero.update();
+      for (let i = 0; i < game.coins.length; i++) {
+        if (!game.coins[i].dead) {
+          game.coins[i].draw();
+        }
+        game.coins[i].update();
+      }
+
+      for (let i = 0; i < game.monsters.length; i++) {
+        if (!game.monsters[i].dead) {
+          game.monsters[i].draw();
+        }
+        game.monsters[i].update();
+      }
+      
       game.collision();
       game.drawScore();
-      requestAnimationFrame(game.draw);
+      
+      requestId = window.requestAnimationFrame(game.draw);
     }
+    
   },
 
   collision() {
@@ -148,6 +153,7 @@ const game = {
   },
 
   gameOver() {
+    window.cancelAnimationFrame(requestId);
     game.isRunning = false;
     game.bgAudio.pause();
     document.getElementById('myTitle').innerText = 'Game Over!';
@@ -172,11 +178,14 @@ const game = {
         game.coins[i].speed -= game.speedX;
       }
     }
-    this.ctx.font      = "18px Arial";
-    game.ctx.strokeStyle = "#fc0";
-    game.ctx.lineWidth = 1;
-    game.ctx.strokeText("Score: " + game.score, 10, 32);
-    game.ctx.strokeText("Level: " + game.level, game.width - 120, 32);
+    game.ctx.fillStyle = "Black";
+    game.ctx.font      = "bold 18px serif";
+    
+    game.ctx.textAlign = 'left';
+    game.ctx.fillText("Score: " + game.score, 10, 32);
+
+    game.ctx.textAlign = 'right';
+    game.ctx.fillText("Level: " + game.level, game.width -10, 32);
   },
 
 };
@@ -184,16 +193,13 @@ const game = {
 function startGame() {
   game.init();
   game.bgAudio.autoplay = true;
-  game.bgAudio.load(); 
   game.bgAudio.volume = 0.4;
 }
 
-document.addEventListener("DOMContentLoaded", startGame);
-
 startBtn.addEventListener('click', function() {
-  game.readyAudio.play();
   game.isRunning = true;
   game.init();
+  game.readyAudio.play();
   document.getElementById('myfilter').style.display = "none";
   document.getElementById('myButton').style.display = "none";
 });

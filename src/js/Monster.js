@@ -26,20 +26,4 @@ class Monster extends Sprite {
       }
     })
   }
-
-  get speed() {
-    return this.speedX;
-  }
-
-  set speed(value) {
-    this.speedX = value;
-  }
-
-  get dead() {
-    return this.isDead;
-  }
-
-  set dead(value) {
-    this.isDead = value;
-  }
 }

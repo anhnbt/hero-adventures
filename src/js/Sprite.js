@@ -7,9 +7,6 @@ class Sprite {
   constructor(options) {
     this.game          = options.game;
     this.src           = options.src;
-    this.x             = options.x;
-    this.y             = options.y;
-    this.road          = options.y;
     this.width         = options.width;
     this.height        = options.height;
     this.scale         = (options.scale) ? options.scale : 1;
@@ -31,10 +28,16 @@ class Sprite {
       ticksPerFrame : options.animations.ticksPerFrame, // Speed of animation
       totalFrames   : options.animations.totalFrames, // Number of Frames in a row
     }
+
+    
+    this.x             = options.x;
+    this.y             = options.y;
+    this.road          = this.y;
   }
 
   update() {
     if (!this.game.isRunning) return;
+
     this.animations.tickCount++;
     if (this.animations.tickCount > this.animations.ticksPerFrame) {
       this.animations.tickCount = 0;
@@ -46,46 +49,35 @@ class Sprite {
     }
 
     if (this.type === 'Coin' || this.type === 'Monster') {
-      this.x += this.speedX;
+      this.x += this.speed;
       
       if (this.x < -this.game.width) {
         this.x = this.game.width;
-        this.isDead = false;
+        this.dead = false;
       }
     }
 
     if (this.type === 'Hero') {
-      
       this.gravitySpeed += this.gravity;
       this.y += this.speedY + this.gravitySpeed;
-      
-      if (this.x < this.width) {
-        this.x = this.width;
-      }
-      
-      if (this.x > this.game.width) {
-        this.x = this.game.width;
-      }
 
       this.hitRoad();
     }
   }
 
   draw() {
-    this.image.src = this.src;
-    this.game.ctx.save();
     this.game.ctx.drawImage(
       this.image,
-      this.animations.frameNumber * this.width, // The x-axis coordinate of the top left corner
-      this.animations.row * this.height, // The y-axis coordinate of the top left corner
-      this.width, // The width of the sub-rectangle
-      this.height, // The height of the sub-rectangle
-      this.x-(this.width/this.scale), // The x coordinate
-      this.y-(this.height/this.scale),// The y coordinate
-      (this.width/this.scale), // The width to draw the image
-      (this.height/this.scale) // The width to draw the image
+      this.animations.frameNumber * this.width,
+      this.animations.row * this.height,
+      this.width,
+      this.height,
+      this.x-(this.width/this.scale),
+      this.y-(this.height/this.scale),
+      (this.width/this.scale),
+      (this.height/this.scale)
       );
-    this.game.ctx.restore();
+    this.image.src = this.src;
   }
 
   hitRoad() {
@@ -107,5 +99,21 @@ class Sprite {
 
   accelerate(n) {
     this.gravity = n;
+  }
+
+  get speed() {
+    return this.speedX;
+  }
+
+  set speed(value) {
+    this.speedX = value;
+  }
+
+  get dead() {
+    return this.isDead;
+  }
+
+  set dead(value) {
+    this.isDead = value;
   }
 }
