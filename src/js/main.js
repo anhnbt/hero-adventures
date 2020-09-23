@@ -152,11 +152,10 @@ const game = {
           && game.hero.x < game.monsters[i].x + game.monsters[i].width
           && game.hero.y + game.hero.height > game.monsters[i].y
           && game.hero.y < game.monsters[i].y + game.monsters[i].height) {
-          console.log("GameOVer!!!!");
           game.monsters[i].dead = true;
+          game.gameOver();
           game.hitAudio.play();
           game.endAudio.play();
-          game.gameOver();
         }
       }
     }
@@ -211,7 +210,18 @@ function startGame() {
 startBtn.addEventListener('click', function() {
   game.isRunning = true;
   game.init();
-  game.readyAudio.play();
+  let audioContext = new AudioContext();
+  audioContext.resume().then(() => {
+    console.log('Playback resumed successfully');
+    game.readyAudio.play();
+    if (game.bgAudio.paused == true) {
+      game.bgAudio.play();
+      mutedBtn.innerHTML = "&#127925; Pause";
+    } else {
+      game.bgAudio.pause();
+      mutedBtn.innerHTML = "&#127925; Play";
+    }
+  });
   document.getElementById('myfilter').style.display = "none";
   document.getElementById('myButton').style.display = "none";
 }, false);
