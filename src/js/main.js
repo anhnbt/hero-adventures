@@ -18,7 +18,7 @@ const game = {
   level            : 0,
   isPauseMusic     : false,
   
-  //initiate game
+  //Initialization game
   init() {
     this.jumpPressed   = false;
     this.isJumping     = false;
@@ -26,7 +26,10 @@ const game = {
     this.level         = 0;
     this.fps           = 0;
     this.canvas        = document.getElementById('gamecanvas');
-    this.ctx           = this.canvas.getContext('2d');
+    this.ctx           = this.canvas.getContext('2d', { alpha: false });
+    this.ctx.webkitImageSmoothingEnabled = false;
+    this.ctx.mozImageSmoothingEnabled = false;
+    this.ctx.imageSmoothingEnabled = false;
     
     this.coinAudio     = document.getElementById("coinAudio");
     this.hitAudio      = document.getElementById("hitAudio");
@@ -53,23 +56,26 @@ const game = {
 
     this.draw();
 
-    document.addEventListener('keydown', this.keyDownHandler, false);
-    document.addEventListener("touchstart", this.touchStartHandler, false);
+    document.addEventListener('keydown', this.keyDownHandler);
+    document.addEventListener("touchstart", this.touchStartHandler);
   },
 
   keyDownHandler(e) {
     if (!game.isJumping) {
-      if (e.keyCode == 32) {
+      if (e.keyCode == 32) { //spacebar
         game.jumpPressed = true;
       }
       game.isJumping = true;
+      e.preventDefault();
     }
   },
-
-  touchStartHandler() {
-    if (!game.isJumping) {
+  
+  // Mobile touch controls
+  touchStartHandler(e) {
+    if (!game.isJumping && e.touches) {
       game.jumpPressed = true;
       game.isJumping = true;
+      e.preventDefault();
     }
   },
 
@@ -86,7 +92,7 @@ const game = {
     
     game.hero.draw();
 
-    if (game.isPauseMusic) {
+    if (game.bgAudio.paused == true) {
       game.bgAudio.pause();
     } else {
       game.bgAudio.play();
@@ -118,7 +124,7 @@ const game = {
         game.monsters[i].update();
       }
       
-      game.collision();
+      game.collisionDetection();
       game.drawScore();
       
       requestId = window.requestAnimationFrame(game.draw);
@@ -126,24 +132,28 @@ const game = {
     
   },
 
-  collision() {
+  collisionDetection() {
     for (let i = 0; i < game.coins.length; i++) {
       if (!game.coins[i].dead) {
-        if (game.hero.x > game.coins[i].x - game.coins[i].width/2 
-          && (game.coins[i].x > game.hero.x || game.coins[i].x > game.hero.x - game.hero.width)
-          && game.hero.y < game.coins[i].y) {
-          game.score++;
-          game.coins[i].dead = true;
-          game.isSpeedDecrement = false;
+        if (game.hero.x + game.hero.width > game.coins[i].x
+            && game.hero.x < game.coins[i].x + game.coins[i].width
+            && game.hero.y + game.hero.height > game.coins[i].y
+            && game.hero.y < game.coins[i].y + game.coins[i].height) {
+            game.coins[i].dead = true;
+            game.isSpeedDecrement = false;
+            game.score++;
         }
       }
     }
 
     for (let i = 0; i < game.monsters.length; i++) {
       if (!game.monsters[i].dead) {
-        if (game.hero.x > (game.monsters[i].x - game.monsters[i].width/2)
-          && (game.monsters[i].x > game.hero.x || game.monsters[i].x > game.hero.x - game.hero.width)
-          && game.hero.y > (game.monsters[i].y + 10 - game.monsters[i].height)) {
+        if (game.hero.x + game.hero.width > game.monsters[i].x
+          && game.hero.x < game.monsters[i].x + game.monsters[i].width
+          && game.hero.y + game.hero.height > game.monsters[i].y
+          && game.hero.y < game.monsters[i].y + game.monsters[i].height) {
+          console.log("GameOVer!!!!");
+          game.monsters[i].dead = true;
           game.hitAudio.play();
           game.endAudio.play();
           game.gameOver();
@@ -158,9 +168,10 @@ const game = {
     game.bgAudio.pause();
     document.getElementById('myTitle').innerText = 'Game Over!';
     document.getElementById('myScore').innerText = "Score: " + game.score;
-    startBtn.innerText = 'Play again';
+    startBtn.innerText = '🔄 Try Again';
     document.getElementById('myfilter').style.display = "block";
     document.getElementById('myButton').style.display = "block";
+    document.getElementById('howToPlay').style.display = "none";
   },
 
   drawScore() {
@@ -178,8 +189,8 @@ const game = {
         game.coins[i].speed -= game.speedX;
       }
     }
+    game.ctx.font      = "16px Ranchers";
     game.ctx.fillStyle = "Black";
-    game.ctx.font      = "bold 18px serif";
     
     game.ctx.textAlign = 'left';
     game.ctx.fillText("Score: " + game.score, 10, 32);
@@ -191,6 +202,7 @@ const game = {
 };
 
 function startGame() {
+  // the html page is ready
   game.init();
   game.bgAudio.autoplay = true;
   game.bgAudio.volume = 0.4;
@@ -202,19 +214,14 @@ startBtn.addEventListener('click', function() {
   game.readyAudio.play();
   document.getElementById('myfilter').style.display = "none";
   document.getElementById('myButton').style.display = "none";
-});
+}, false);
 
 mutedBtn.addEventListener('click', function() {
-  if (game.isPauseMusic) {
+  if (game.bgAudio.paused == true) {
     game.bgAudio.play();
-    mutedBtn.textContent = "Music Off";
-    mutedBtn.classList.remove("btn-danger");
-    mutedBtn.classList.add("btn-default");
+    mutedBtn.innerHTML = "&#127925; Pause";
   } else {
     game.bgAudio.pause();
-    mutedBtn.textContent = "Music On";
-    mutedBtn.classList.remove("btn-default");
-    mutedBtn.classList.add("btn-danger");
+    mutedBtn.innerHTML = "&#127925; Play";
   }
-  game.isPauseMusic = !game.isPauseMusic;
-});
+}, false);

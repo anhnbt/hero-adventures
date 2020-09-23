@@ -22,7 +22,7 @@ class Hero extends Sprite {
         length        : 1,
         row           : 0,
         tickCount     : 0,
-        ticksPerFrame : 5,
+        ticksPerFrame : 8,
         totalFrames   : 4,
       }
     })
