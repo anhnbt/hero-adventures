@@ -31,25 +31,26 @@ const game = {
     this.ctx.mozImageSmoothingEnabled = false;
     this.ctx.imageSmoothingEnabled = false;
     
-    this.coinAudio     = document.getElementById("coinAudio");
-    this.hitAudio      = document.getElementById("hitAudio");
-    this.endAudio      = document.getElementById("gameOverAudio");
-    this.jumpAudio     = document.getElementById("jumpAudio");
-    this.bgAudio       = document.getElementById("bgAudio");
-    this.readyAudio    = document.getElementById("readyAudio");
-    this.bg            = new Bg(this);
-    this.rocks         = new Rocks(this);
-    this.hills         = new Hills(this);
-    this.clouds        = new Clouds(this);
-    this.hillsCastle   = new HillsCastle(this);
-    this.treesRocks    = new TreesRocks(this);
-    this.ground        = new Ground(this);
-    this.hero          = new Hero(80, 220, this);
-    this.coins         = [
+    this.coinAudio      = document.getElementById("coinAudio");
+    this.hitAudio       = document.getElementById("hitAudio");
+    this.endAudio       = document.getElementById("gameOverAudio");
+    this.jumpAudio      = document.getElementById("jumpAudio");
+    this.bgAudio        = document.getElementById("bgAudio");
+    game.bgAudio.volume = 0.4;
+    this.readyAudio     = document.getElementById("readyAudio");
+    this.bg             = new Bg(this);
+    this.rocks          = new Rocks(this);
+    this.hills          = new Hills(this);
+    this.clouds         = new Clouds(this);
+    this.hillsCastle    = new HillsCastle(this);
+    this.treesRocks     = new TreesRocks(this);
+    this.ground         = new Ground(this);
+    this.hero           = new Hero(80, 220, this);
+    this.coins          = [
       new Coin(this.width, this.height/2, this),
       new Coin(this.width*2, this.height/2, this)
     ];
-    this.monsters      = [
+    this.monsters       = [
       new Monster(this.width, 220, this),
       new Monster(this.width*2, 220, this)
     ];
@@ -203,8 +204,6 @@ const game = {
 function startGame() {
   // the html page is ready
   game.init();
-  game.bgAudio.autoplay = true;
-  game.bgAudio.volume = 0.4;
 }
 
 startBtn.addEventListener('click', function() {
